@@ -76,10 +76,19 @@ M.cell = function(index)
       M.separator(index)
 end
 
+local default_config = {
+  title = M.title,
+  modified = M.modified,
+  devicon = M.devicon,
+  separator = M.separator,
+  cell = M.cell,
+}
+
 M.tabline = function()
+  local config = default_config
   local line = ''
   for i = 1, vim.fn.tabpagenr('$'), 1 do
-    line = line .. M.cell(i)
+    line = line .. config.cell(i)
   end
   line = line .. '%#TabLineFill#%='
   if vim.fn.tabpagenr('$') > 1 then
@@ -88,31 +97,4 @@ M.tabline = function()
   return line
 end
 
-local setup = function(opts)
-  opts = opts or {}
-  if opts.title then M.title = opts.title end
-  if opts.modified then M.modified = opts.modified end
-  if opts.windowCount then M.windowCount = opts.windowCount end
-  if opts.devicon then M.devicon = opts.devicon end
-  if opts.separator then M.separator = opts.separator end
-  if opts.cell then M.cell = opts.cell end
-  if opts.tabline then M.tabline = opts.tabline end
-
-  vim.opt.tabline = '%!v:lua.require\'SimpleLine\'.helpers.tabline()'
-end
-
-local warning = function()
-  error [[
-Hi, I've updated SimpleLine.nvim to allow some proper configuration. As a result, I need to make a breaking change to the config. Apologies for the inconvinence.
-If you had:
-    vim.o.tabline = '%!v:lua.require\'SimpleLine\'.tabline()'
-please replace it with
-    require('SimpleLine').setup({})
-]]
-end
-
-return {
-  helpers = M,
-  setup = setup,
-  tabline = warning,
-}
+return M

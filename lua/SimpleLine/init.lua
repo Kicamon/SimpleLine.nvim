@@ -1,3 +1,11 @@
-local tabline = require("SimpleLine.tabline")
+local M = {}
+M.tabline = require("SimpleLine.tabline")
 
-return tabline
+local setup = function()
+  vim.opt.tabline = '%!v:lua.require\'SimpleLine.tabline\'.tabline()'
+end
+
+return {
+  SimpleLine = M,
+  setup = setup,
+}

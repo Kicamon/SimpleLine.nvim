@@ -16,7 +16,7 @@ end
 
 M.create_component_highlight_group = function(color, highlight_tag)
   if color.bg and color.fg then
-    local highlight_group_name = table.concat({ 'SimpleTab', highlight_tag }, '_')
+    local highlight_group_name = table.concat({ 'SimpleStatus', highlight_tag }, '_')
     M.highlight(highlight_group_name, color.fg, color.bg)
     return highlight_group_name
   end
