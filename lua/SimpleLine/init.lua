@@ -70,7 +70,7 @@ M.devicon = function(bufnr, isSelected)
 end
 
 M.separator = function(index)
-  return (index < vim.fn.tabpagenr('$') and '%#TabLine#|' or '')
+  return (index < vim.fn.tabpagenr('$') and '%#TabLine#╲' or '')
 end
 
 M.cell = function(index)
