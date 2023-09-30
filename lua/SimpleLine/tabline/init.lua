@@ -58,9 +58,9 @@ M.devicon = function(bufnr, isSelected)
   return ''
 end
 
-M.separator = function(index)
-  return (index < vim.fn.tabpagenr('$') and '%#TabLine#|' or '')
-end
+-- M.separator = function(index)
+--   return (index < vim.fn.tabpagenr('$') and '%#TabLine#|' or '')
+-- end
 
 M.cell = function(index)
   local isSelected = vim.fn.tabpagenr() == index
@@ -72,15 +72,15 @@ M.cell = function(index)
   return hl .. '%' .. index .. 'T' .. ' ' ..
       M.title(bufnr) .. ' ' ..
       M.modified(bufnr) ..
-      M.devicon(bufnr, isSelected) .. '%T' ..
-      M.separator(index)
+      M.devicon(bufnr, isSelected) .. '%T'
+      -- M.separator(index)
 end
 
 local default_config = {
   title = M.title,
   modified = M.modified,
   devicon = M.devicon,
-  separator = M.separator,
+  -- separator = M.separator,
   cell = M.cell,
 }
 
