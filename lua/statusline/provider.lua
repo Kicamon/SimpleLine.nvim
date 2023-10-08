@@ -276,7 +276,7 @@ end
 
 function pd.lnumcol()
   local result = {
-    stl   = '%-4.(%l:%c%) %P',
+    stl   = '%-2.(%l:%c%) %P',
     name  = 'linecol',
     event = { 'CursorHold' },
   }
