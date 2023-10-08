@@ -47,7 +47,7 @@ M.devicon = function(bufnr, isSelected)
     icon, devhl = devicons.get_icon(file, vim.fn.expand('#' .. bufnr .. ':e'))
   end
   if icon then
-    local h = require 'SimpleLine.tabline.highlight'
+    local h = require 'tabline.highlight'
     local fg = h.extract_highlight_colors(devhl, 'fg')
     local bg = h.extract_highlight_colors('TabLineSel', 'bg')
     local hl = h.create_component_highlight_group({ bg = bg, fg = fg }, devhl)
@@ -73,7 +73,7 @@ M.cell = function(index)
       M.title(bufnr) .. ' ' ..
       M.modified(bufnr) ..
       M.devicon(bufnr, isSelected) .. '%T'
-      -- M.separator(index)
+  -- M.separator(index)
 end
 
 local default_config = {
@@ -97,4 +97,12 @@ M.tabline = function()
   return line
 end
 
-return M
+local setup = function()
+  vim.opt.tabline = '%!v:lua.require\'tabline\'.tabline.tabline()'
+end
+
+return {
+  tabline = M,
+  setup = setup,
+}
+
