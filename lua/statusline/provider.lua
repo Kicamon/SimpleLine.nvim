@@ -54,10 +54,8 @@ function pd.mode()
     event = { 'ModeChanged', 'BufEnter' },
   }
 
-  if not pd.initialized then
-    result.attr = stl_attr('StatuslineMode')
-    result.attr.bold = true
-  end
+  result.attr = stl_attr('StatuslineMode')
+  result.attr.bold = true
 
   return result
 end
