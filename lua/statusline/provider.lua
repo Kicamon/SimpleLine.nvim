@@ -196,7 +196,8 @@ local function gitsigns_data(type)
   return val
 end
 
-local function git_icons(type) local tbl = {
+local function git_icons(type)
+  local tbl = {
     ['added'] = ' ',
     ['changed'] = '󰝤 ',
     ['deleted'] = ' ',
@@ -279,8 +280,8 @@ end
 
 function pd.lnumcol()
   local result = {
-    stl = '%-4.(%l:%c%) %P',
-    name = 'linecol',
+    stl   = '%-4.(%l:%c%) %P',
+    name  = 'linecol',
     event = { 'CursorHold' },
   }
 
