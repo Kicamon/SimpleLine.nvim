@@ -108,6 +108,7 @@ function pd.fileinfo()
   }
 
   result.attr = stl_attr('StatuslineFile')
+  result.attr.bold = true
 
   return result
 end
@@ -195,8 +196,7 @@ local function gitsigns_data(type)
   return val
 end
 
-local function git_icons(type)
-  local tbl = {
+local function git_icons(type) local tbl = {
     ['added'] = ' ',
     ['changed'] = '󰝤 ',
     ['deleted'] = ' ',
@@ -285,6 +285,7 @@ function pd.lnumcol()
   }
 
   result.attr = stl_attr('StatuslineNum')
+  result.attr.bold = true
   return result
 end
 
