@@ -35,9 +35,6 @@ local function default()
     p.diagHint,
     --
     s.sep,
-    p.macro,
-    --
-    s.sep,
     p.encoding,
     --
     s.sep,
