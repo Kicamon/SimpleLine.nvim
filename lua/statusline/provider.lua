@@ -1,4 +1,4 @@
-local api, uv = vim.api, vim.loop
+local api = vim.api
 local pd = {}
 
 pd.initialized = false
@@ -58,10 +58,6 @@ function pd.mode()
   result.attr.bold = true
 
   return result
-end
-
-local function path_sep()
-  return uv.os_uname().sysname == 'Windows_NT' and '\\' or '/'
 end
 
 local resolve
