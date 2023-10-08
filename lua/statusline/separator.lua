@@ -15,7 +15,7 @@ end
 function sp.sp()
   return {
     stl = '█',
-    name = 'sepleft',
+    name = 'sepblock',
     attr = {
       background = 'NONE',
       foreground = pd.stl_bg(),

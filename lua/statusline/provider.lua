@@ -54,7 +54,7 @@ function pd.mode()
     event = { 'ModeChanged', 'BufEnter' },
   }
 
-  result.attr = stl_attr('StatuslineMode')
+  result.attr = stl_attr('StatuslineGreen')
   result.attr.bold = true
 
   return result
@@ -103,7 +103,7 @@ function pd.fileinfo()
     event = { 'BufEnter' },
   }
 
-  result.attr = stl_attr('StatuslineFile')
+  result.attr = stl_attr('StatuslineBlue')
   result.attr.bold = true
 
   return result
@@ -258,7 +258,7 @@ function pd.branch()
     name = 'gitbranch',
     event = { 'GitSignsUpdate' },
   }
-  result.attr = stl_attr('StatuslineBranch')
+  result.attr = stl_attr('StatuslineBlue')
   result.attr.bold = true
   return result
 end
@@ -281,7 +281,7 @@ function pd.lnumcol()
     event = { 'CursorHold' },
   }
 
-  result.attr = stl_attr('StatuslineNum')
+  result.attr = stl_attr('StatuslineGreen')
   result.attr.bold = true
   return result
 end
@@ -360,6 +360,20 @@ function pd.diagHint()
   return result
 end
 
+function pd.macro()
+  local result = {
+    stl = function()
+      local macro_register = vim.fn.reg_recording()
+      local macro_content = vim.fn.getreg(macro_register)
+      return macro_content
+    end,
+    name = 'macro',
+    event = { 'CursorHold' },
+  }
+  result.attr = stl_attr('DiagnosticYellow', true)
+  return result
+end
+
 function pd.encoding()
   local result = {
     -- stl = '%{&fileencoding?&fileencoding:&encoding}',
@@ -367,7 +381,7 @@ function pd.encoding()
     name = 'filencode',
     event = { 'BufEnter' },
   }
-  result.attr = stl_attr('StatuslineEncodeing')
+  result.attr = stl_attr('StatuslineGreen')
   return result
 end
 
