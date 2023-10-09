@@ -91,7 +91,7 @@ M.tabline = function()
     line = line .. config.cell(i)
   end
   line = line .. '%#TabLineFill#%='
-  line = '%#TabLineSel#% █' .. line
+  line = '%#TabLineTop#% █' .. line
   return line
 end
 
