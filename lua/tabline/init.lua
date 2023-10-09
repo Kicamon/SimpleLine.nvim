@@ -70,9 +70,9 @@ M.cell = function(index)
   local hl = (isSelected and '%#TabLineSel#' or '%#TabLine#')
 
   return hl .. '%' .. index .. 'T' .. ' ' ..
+      M.devicon(bufnr, isSelected) ..
       M.title(bufnr) .. ' ' ..
-      M.modified(bufnr) ..
-      M.devicon(bufnr, isSelected) .. '%T'
+      M.modified(bufnr) .. '%T'
   -- M.separator(index)
 end
 
@@ -91,9 +91,7 @@ M.tabline = function()
     line = line .. config.cell(i)
   end
   line = line .. '%#TabLineFill#%='
-  -- if vim.fn.tabpagenr('$') > 1 then
-  --   line = line .. '%#TabLine#%999XX'
-  -- end
+  line = '%#TabLineSel#% █' .. line
   return line
 end
 
@@ -105,4 +103,3 @@ return {
   tabline = M,
   setup = setup,
 }
-
