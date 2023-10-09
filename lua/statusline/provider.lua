@@ -54,7 +54,7 @@ function pd.mode()
     event = { 'ModeChanged', 'BufEnter' },
   }
 
-  result.attr = stl_attr('StatusLineGreen')
+  result.attr = stl_attr('StatusLineGreen', true)
   result.attr.bold = true
 
   return result
@@ -103,7 +103,7 @@ function pd.fileinfo()
     event = { 'BufEnter' },
   }
 
-  result.attr = stl_attr('StatusLineBlue')
+  result.attr = stl_attr('StatusLineBlue', true)
   result.attr.bold = true
 
   return result
@@ -176,7 +176,7 @@ function pd.lsp()
   }
 
   if not pd.initialized then
-    result.attr = stl_attr('Function')
+    result.attr = stl_attr('Function', true)
     result.attr.bold = true
   end
   return result
@@ -211,7 +211,7 @@ function pd.gitadd()
     event = { 'GitSignsUpdate' },
   }
   if not pd.initialized then
-    result.attr = stl_attr('DiffAdd')
+    result.attr = stl_attr('DiffAdd', true)
   end
   return result
 end
@@ -227,7 +227,7 @@ function pd.gitchange()
   }
 
   if not pd.initialized then
-    result.attr = stl_attr('DiffChange')
+    result.attr = stl_attr('DiffChange', true)
   end
   return result
 end
@@ -243,7 +243,7 @@ function pd.gitdelete()
   }
 
   if not pd.initialized then
-    result.attr = stl_attr('DiffDelete')
+    result.attr = stl_attr('DiffDelete', true)
   end
   return result
 end
@@ -258,7 +258,7 @@ function pd.branch()
     name = 'gitbranch',
     event = { 'GitSignsUpdate' },
   }
-  result.attr = stl_attr('StatusLineBlue')
+  result.attr = stl_attr('StatusLineBlue', true)
   result.attr.bold = true
   return result
 end
@@ -267,10 +267,6 @@ function pd.pad()
   return {
     stl = '%=',
     name = 'pad',
-    attr = {
-      background = '#282828',
-      foreground = '#282828',
-    },
   }
 end
 
@@ -281,7 +277,7 @@ function pd.lnumcol()
     event = { 'CursorHold' },
   }
 
-  result.attr = stl_attr('StatusLineGreen')
+  result.attr = stl_attr('StatusLineGreen', true)
   result.attr.bold = true
   return result
 end
@@ -360,14 +356,18 @@ function pd.diagHint()
   return result
 end
 
-function pd.encoding()
+function pd.fileformat()
+  local map = {
+    ['unix'] = ' ',
+    ['linux'] = ' ',
+    ['dos'] = ' ',
+  }
   local result = {
-    -- stl = '%{&fileencoding?&fileencoding:&encoding}',
-    stl = ' ',
-    name = 'filencode',
+    stl = map[vim.o.ff],
+    name = 'fileformat',
     event = { 'BufEnter' },
   }
-  result.attr = stl_attr('StatusLineGreen')
+  result.attr = stl_attr("StatusLineGreen", true)
   return result
 end
 
