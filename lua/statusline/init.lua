@@ -35,7 +35,7 @@ local function default()
     p.diagHint,
     --
     s.sep,
-    p.fileformat,
+    p.encoding,
     --
     s.sep,
     p.lnumcol,

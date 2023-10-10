@@ -272,7 +272,7 @@ end
 
 function pd.lnumcol()
   local result = {
-    stl   = '%-2.(%l:%c%) %P',
+    stl   = '%-2.(%l:%c%)  %P',
     name  = 'linecol',
     event = { 'CursorHold' },
   }
@@ -356,18 +356,19 @@ function pd.diagHint()
   return result
 end
 
-function pd.fileformat()
+function pd.encoding()
   local map = {
     ['unix'] = ' ',
     ['linux'] = ' ',
     ['dos'] = ' ',
   }
   local result = {
-    stl = map[vim.o.ff],
+    stl = vim.o.fileencoding .. ' ' .. map[vim.o.ff],
     name = 'fileformat',
     event = { 'BufEnter' },
   }
   result.attr = stl_attr("StatusLineGreen", true)
+  result.attr.bold = true
   return result
 end
 
