@@ -4,13 +4,13 @@ A neovim statusline and bufferline plugin
 my perosnal statusline not support configuration.
 
 ## demo
-![demo](demo.png)
+![demo](Demo.png)
 
 ## Tabline
-The Tabline fork from [luatab.nvim](https://github.com/alvarosevilla95/luatab.nvim)
+The Tabline forked from [luatab.nvim](https://github.com/alvarosevilla95/luatab.nvim)
 
 ## statusline
-The Statusline fork from [whiskyline](https://github.com/nvimdev/whiskyline.nvim)
+The Statusline forked from [whiskyline](https://github.com/nvimdev/whiskyline.nvim)
 
 ## Installation
 ```lua
@@ -22,3 +22,6 @@ The Statusline fork from [whiskyline](https://github.com/nvimdev/whiskyline.nvim
   end
 }
 ```
+
+## Heilght groups
+please use [gruvbox.nvim](https://github.com/Kicamon/gruvbox.nvim) if you want to use SimpleLine
