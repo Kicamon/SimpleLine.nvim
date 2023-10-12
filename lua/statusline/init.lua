@@ -11,19 +11,18 @@ end
 
 local function default()
   local p = require('statusline.provider')
-  local s = require('statusline.separator')
   return {
     --
-    s.sp,
+    p.sep,
     p.mode,
     --
-    s.sep,
+    p.sep,
     p.fileicon,
     p.fileinfo,
     --
-    s.sep,
+    p.sep,
     p.branch,
-    s.sep,
+    p.sep,
     p.gitadd,
     p.gitchange,
     p.gitdelete,
@@ -34,12 +33,12 @@ local function default()
     p.diagInfo,
     p.diagHint,
     --
-    s.sep,
+    p.sep,
     p.encoding,
+    p.sep,
     --
-    s.sep,
     p.lnumcol,
-    s.sp,
+    p.sep,
     --
   }
 end
