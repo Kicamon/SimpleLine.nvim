@@ -294,6 +294,22 @@ function pd.diagHint()
   return result
 end
 
+function pd.readonly()
+  local result = {
+    stl = function()
+      if vim.bo.readonly then
+        return ' '
+      else
+        return ''
+      end
+    end,
+    name = 'readonly',
+    event = { 'BufEnter' },
+  }
+  result.attr = stl_attr("StatusLineGreen", true)
+  return result
+end
+
 function pd.encoding()
   local map = {
     ['unix'] = ' ',
