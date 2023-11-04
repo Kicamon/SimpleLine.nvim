@@ -54,7 +54,7 @@ function pd.mode()
     event = { 'ModeChanged', 'BufEnter' },
   }
 
-  result.attr = stl_attr("StatusLineGreen", true)
+  result.attr = stl_attr("StatusLineMode", true)
   result.attr.bold = true
 
   return result
@@ -103,7 +103,7 @@ function pd.fileinfo()
     event = { 'BufEnter' },
   }
 
-  result.attr = stl_attr('StatusLineBlue', true)
+  result.attr = stl_attr('StatusLineFileInfo', true)
   result.attr.bold = true
 
   return result
@@ -185,7 +185,7 @@ function pd.branch()
     name = 'gitbranch',
     event = { 'GitSignsUpdate' },
   }
-  result.attr = stl_attr('StatusLineBlue', true)
+  result.attr = stl_attr('StatlsLineBranch', true)
   result.attr.bold = true
   return result
 end
@@ -215,7 +215,7 @@ function pd.lnumcol()
     event = { 'CursorHold' },
   }
 
-  result.attr = stl_attr('StatusLineGreen', true)
+  result.attr = stl_attr('StatlsLineLnum', true)
   result.attr.bold = true
   return result
 end
@@ -306,7 +306,7 @@ function pd.readonly()
     name = 'readonly',
     event = { 'BufEnter' },
   }
-  result.attr = stl_attr("StatusLineGreen", true)
+  result.attr = stl_attr("StatusLineReadOnly", true)
   return result
 end
 
@@ -321,7 +321,7 @@ function pd.encoding()
     name = 'fileformat',
     event = { 'BufEnter' },
   }
-  result.attr = stl_attr("StatusLineGreen", true)
+  result.attr = stl_attr("StatusLineEncoding", true)
   result.attr.bold = true
   return result
 end
