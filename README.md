@@ -16,6 +16,7 @@ The Statusline forked from [whiskyline](https://github.com/nvimdev/whiskyline.nv
 ```lua
 {
   "Kicamon/SimpleLine.nvim",
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     require("statusline").setup()
     require("tabline").setup()
