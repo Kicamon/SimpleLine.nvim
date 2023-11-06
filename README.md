@@ -9,6 +9,9 @@
 ![statusline](img/statusline.png)
 
 ## Installation
+<details>
+<summary>lazy.nvim</summary>
+
 ```lua
 {
   "Kicamon/SimpleLine.nvim",
@@ -19,6 +22,19 @@
   end
 }
 ```
+
+</details>
+
+<details>
+<summary>vim-plug</summary>
+
+```vim
+Plug "Kicamon/SimpleLine.nvim"
+lua require("statusline").setup()
+lua require("tabline").setup()
+```
+
+</details>
 
 ## Heilght groups
 ```
