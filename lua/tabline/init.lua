@@ -41,17 +41,17 @@ M.devicon = function(bufnr, isSelected)
     return ''
   end
   if filetype == 'TelescopePrompt' then
-    icon, devhl = devicons.get_icon('telescope')
+    icon, devhl = devicons.get_icon_color_by_filetype('telescope', { default = true })
   elseif filetype == 'fugitive' then
-    icon, devhl = devicons.get_icon('git')
+    icon, devhl = devicons.get_icon_color_by_filetype('git', { default = true })
   elseif buftype == 'terminal' then
-    icon, devhl = devicons.get_icon('zsh')
+    icon, devhl = devicons.get_icon_color_by_filetype('zsh', { default = true })
   else
-    icon, devhl = devicons.get_icon(file, filetype)
+    icon, devhl = devicons.get_icon_color_by_filetype(filetype, { default = true })
   end
   if icon then
     local h = require 'tabline.highlight'
-    local fg = h.extract_highlight_colors(devhl, 'fg')
+    local fg = devhl
     local bg = h.extract_highlight_colors('TabLineSel', 'bg')
     local hl = h.create_component_highlight_group({ bg = bg, fg = fg }, devhl)
     local selectedHlStart = (isSelected and hl) and '%#' .. hl .. '#' or ''
