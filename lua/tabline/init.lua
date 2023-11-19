@@ -1,22 +1,19 @@
-local M = {}
+local Simple_Tab = {}
 
-M.title = function(bufnr)
+local function tbl_hl(name, attr)
+  vim.api.nvim_set_hl(0, "Simple_Tab" .. name, attr)
+  return "Simple_Tab" .. name
+end
+
+Simple_Tab.title = function(bufnr)
   local file = vim.fn.bufname(bufnr)
   local buftype = vim.fn.getbufvar(bufnr, '&buftype')
   local filetype = vim.fn.getbufvar(bufnr, '&filetype')
 
   if buftype == 'help' then
     return 'help:' .. vim.fn.fnamemodify(file, ':t:r')
-  elseif buftype == 'quickfix' then
-    return 'quickfix'
   elseif filetype == 'TelescopePrompt' then
     return 'Telescope'
-  elseif filetype == 'git' then
-    return 'Git'
-  elseif filetype == 'fugitive' then
-    return 'Fugitive'
-  elseif file:sub(file:len() - 2, file:len()) == 'FZF' then
-    return 'FZF'
   elseif buftype == 'terminal' then
     local _, mtch = string.match(file, "term:(.*):(%a+)")
     return mtch ~= nil and mtch or vim.fn.fnamemodify(vim.env.SHELL, ':t')
@@ -27,33 +24,28 @@ M.title = function(bufnr)
   end
 end
 
-M.modified = function(bufnr)
+Simple_Tab.modified = function(bufnr)
   return vim.fn.getbufvar(bufnr, '&modified') == 1 and '● ' or ''
 end
 
-M.devicon = function(bufnr, isSelected)
+Simple_Tab.devicon = function(bufnr, isSelected)
   local icon, devhl
-  local file = vim.fn.bufname(bufnr)
   local buftype = vim.fn.getbufvar(bufnr, '&buftype')
   local filetype = vim.fn.getbufvar(bufnr, '&filetype')
   local ok, devicons = pcall(require, 'nvim-web-devicons')
   if not ok then
     return ''
   end
-  if filetype == 'TelescopePrompt' then
-    icon, devhl = devicons.get_icon_color_by_filetype('telescope', { default = true })
-  elseif filetype == 'fugitive' then
-    icon, devhl = devicons.get_icon_color_by_filetype('git', { default = true })
-  elseif buftype == 'terminal' then
+  if buftype == 'terminal' then
     icon, devhl = devicons.get_icon_color_by_filetype('zsh', { default = true })
   else
     icon, devhl = devicons.get_icon_color_by_filetype(filetype, { default = true })
   end
   if icon then
-    local h = require 'tabline.highlight'
-    local fg = devhl
-    local bg = h.extract_highlight_colors('TabLineSel', 'bg')
-    local hl = h.create_component_highlight_group({ bg = bg, fg = fg }, filetype)
+    local attr = {
+      fg = devhl,
+    }
+    local hl = tbl_hl(filetype, attr)
     local selectedHlStart = (isSelected and hl) and '%#' .. hl .. '#' or ''
     local selectedHlEnd = isSelected and '%#TabLineSel#' or ''
     return selectedHlStart .. icon .. selectedHlEnd .. ' '
@@ -61,11 +53,7 @@ M.devicon = function(bufnr, isSelected)
   return ''
 end
 
--- M.separator = function(index)
---   return (index < vim.fn.tabpagenr('$') and '%#TabLine#|' or '')
--- end
-
-M.cell = function(index)
+Simple_Tab.cell = function(index)
   local isSelected = vim.fn.tabpagenr() == index
   local buflist = vim.fn.tabpagebuflist(index)
   local winnr = vim.fn.tabpagewinnr(index)
@@ -73,21 +61,19 @@ M.cell = function(index)
   local hl = (isSelected and '%#TabLineSel#' or '%#TabLine#')
 
   return hl .. '%' .. index .. 'T' .. ' ' .. ' ' ..
-      M.devicon(bufnr, isSelected) ..
-      M.title(bufnr) .. ' ' ..
-      M.modified(bufnr) .. '%T'
-  -- M.separator(index)
+      Simple_Tab.devicon(bufnr, isSelected) ..
+      Simple_Tab.title(bufnr) .. ' ' ..
+      Simple_Tab.modified(bufnr) .. '%T'
 end
 
 local default_config = {
-  title = M.title,
-  modified = M.modified,
-  devicon = M.devicon,
-  -- separator = M.separator,
-  cell = M.cell,
+  title = Simple_Tab.title,
+  modified = Simple_Tab.modified,
+  devicon = Simple_Tab.devicon,
+  cell = Simple_Tab.cell,
 }
 
-M.tabline = function()
+Simple_Tab.tabline = function()
   local config = default_config
   local line = ''
   for i = 1, vim.fn.tabpagenr('$'), 1 do
@@ -102,6 +88,6 @@ local setup = function()
 end
 
 return {
-  tabline = M,
+  tabline = Simple_Tab,
   setup = setup,
 }

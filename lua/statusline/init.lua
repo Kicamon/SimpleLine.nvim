@@ -1,12 +1,12 @@
 local co, api = coroutine, vim.api
-local whk = {}
+local Simple_Status = {}
 
 local function stl_format(name, val)
-  return '%#Whisky' .. name .. '#' .. val .. '%*'
+  return '%#Simple_Status' .. name .. '#' .. val .. '%*'
 end
 
 local function stl_hl(name, attr)
-  api.nvim_set_hl(0, 'Whisky' .. name, attr)
+  api.nvim_set_hl(0, 'Simple_Status' .. name, attr)
 end
 
 local function default()
@@ -46,8 +46,8 @@ local function default()
 end
 
 local function whk_init(event, pieces)
-  whk.cache = {}
-  for i, e in ipairs(whk.elements) do
+  Simple_Status.cache = {}
+  for i, e in ipairs(Simple_Status.elements) do
     local res = e()
 
     if res.event and vim.tbl_contains(res.event, event) then
@@ -63,7 +63,7 @@ local function whk_init(event, pieces)
       stl_hl(res.name, res.attr)
     end
 
-    whk.cache[i] = {
+    Simple_Status.cache[i] = {
       event = res.event,
       name = res.name,
       stl = res.stl,
@@ -76,12 +76,12 @@ end
 local stl_render = co.create(function(event)
   local pieces = {}
   while true do
-    if not whk.cache then
+    if not Simple_Status.cache then
       whk_init(event, pieces)
     else
-      for i, item in ipairs(whk.cache) do
+      for i, item in ipairs(Simple_Status.cache) do
         if item.event and vim.tbl_contains(item.event, event) and type(item.stl) == 'function' then
-          local comp = whk.elements[i]
+          local comp = Simple_Status.elements[i]
           local res = comp()
           if res.attr then
             stl_hl(item.name, res.attr)
@@ -95,9 +95,9 @@ local stl_render = co.create(function(event)
   end
 end)
 
-function whk.setup()
-  whk.bg = "#282828"
-  whk.elements = default()
+function Simple_Status.setup()
+  Simple_Status.bg = "#282828"
+  Simple_Status.elements = default()
 
   api.nvim_create_autocmd({ 'User' }, {
     pattern = { 'LspProgressUpdate', 'GitSignsUpdate' },
@@ -119,4 +119,4 @@ function whk.setup()
   })
 end
 
-return whk
+return Simple_Status
