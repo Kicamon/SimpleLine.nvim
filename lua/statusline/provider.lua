@@ -3,15 +3,11 @@ local pd = {}
 
 pd.initialized = false
 
-function pd.stl_bg()
-  return require('statusline').bg
-end
-
 local function stl_attr(group, trans)
   local color = api.nvim_get_hl_by_name(group, true)
   trans = trans or false
   return {
-    bg = trans and 'NONE' or pd.stl_bg(),
+    bg = 'NONE',
     fg = color.foreground,
   }
 end
@@ -86,7 +82,6 @@ function pd.fileicon()
     name = 'fileicon',
     event = { 'BufEnter' },
     attr = {
-      bg = pd.stl_bg(),
       fg = color,
     },
   }

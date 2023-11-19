@@ -96,7 +96,6 @@ local stl_render = co.create(function(event)
 end)
 
 function Simple_Status.setup()
-  Simple_Status.bg = "#282828"
   Simple_Status.elements = default()
 
   api.nvim_create_autocmd({ 'User' }, {
