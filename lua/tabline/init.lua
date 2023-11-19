@@ -36,7 +36,10 @@ M.devicon = function(bufnr, isSelected)
   local file = vim.fn.bufname(bufnr)
   local buftype = vim.fn.getbufvar(bufnr, '&buftype')
   local filetype = vim.fn.getbufvar(bufnr, '&filetype')
-  local devicons = require 'nvim-web-devicons'
+  local ok, devicons = pcall(require, 'nvim-web-devicons')
+  if not ok then
+    return ''
+  end
   if filetype == 'TelescopePrompt' then
     icon, devhl = devicons.get_icon('telescope')
   elseif filetype == 'fugitive' then
@@ -44,7 +47,7 @@ M.devicon = function(bufnr, isSelected)
   elseif buftype == 'terminal' then
     icon, devhl = devicons.get_icon('zsh')
   else
-    icon, devhl = devicons.get_icon(file, vim.fn.expand('#' .. bufnr .. ':e'))
+    icon, devhl = devicons.get_icon(file, filetype)
   end
   if icon then
     local h = require 'tabline.highlight'
