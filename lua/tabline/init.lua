@@ -53,7 +53,7 @@ M.devicon = function(bufnr, isSelected)
     local h = require 'tabline.highlight'
     local fg = devhl
     local bg = h.extract_highlight_colors('TabLineSel', 'bg')
-    local hl = h.create_component_highlight_group({ bg = bg, fg = fg }, devhl)
+    local hl = h.create_component_highlight_group({ bg = bg, fg = fg }, filetype)
     local selectedHlStart = (isSelected and hl) and '%#' .. hl .. '#' or ''
     local selectedHlEnd = isSelected and '%#TabLineSel#' or ''
     return selectedHlStart .. icon .. selectedHlEnd .. ' '
