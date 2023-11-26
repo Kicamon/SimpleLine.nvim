@@ -84,15 +84,24 @@ local tbl_rendera = coroutine.create(function()
   end
 end)
 
+local function update(move)
+  if move then
+    vim.cmd(move .. 'tabmove')
+  end
+  vim.schedule(function()
+    coroutine.resume(tbl_rendera)
+  end)
+end
+
 function Simple_Tab.setup()
   local events = { 'BufEnter', 'BufWritePost', 'BufModifiedSet', 'TabNew', 'TabEnter', 'TabLeave' }
   vim.api.nvim_create_autocmd(events, {
     callback = function()
-      vim.schedule(function()
-        coroutine.resume(tbl_rendera)
-      end)
+      update()
     end
   })
+  vim.keymap.set('n', 'tmp', function() update('-') end, {})
+  vim.keymap.set('n', 'tmn', function() update('+') end, {})
 end
 
 return Simple_Tab
