@@ -117,7 +117,7 @@ end
 local function git_icons(type)
   local tbl = {
     ['added'] = ' ',
-    ['changed'] = '󰝤 ',
+    ['changed'] = ' ',
     ['deleted'] = ' ',
   }
   return tbl[type]
