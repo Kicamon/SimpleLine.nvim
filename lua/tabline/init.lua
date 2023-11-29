@@ -94,7 +94,7 @@ local function update(move)
 end
 
 function Simple_Tab.setup()
-  local events = { 'BufEnter', 'BufWritePost', 'BufModifiedSet', 'TabNew', 'TabEnter', 'TabLeave' }
+  local events = { 'BufEnter', 'BufWritePost', 'BufModifiedSet', 'TabNew', 'TabEnter', 'TabLeave', 'BufLeave' }
   vim.api.nvim_create_autocmd(events, {
     callback = function()
       update()
