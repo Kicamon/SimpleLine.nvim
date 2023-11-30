@@ -95,7 +95,7 @@ function pd.fileinfo()
   local result = {
     stl = stl_file,
     name = 'fileinfo',
-    event = { 'BufEnter' },
+    event = { 'BufEnter', 'TermClose' },
   }
 
   result.attr = stl_attr('StatusLineFileInfo', true)
