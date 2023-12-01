@@ -80,7 +80,7 @@ function pd.fileicon()
       return icon .. ' '
     end,
     name = 'fileicon',
-    event = { 'BufEnter' },
+    event = { 'BufEnter', 'TermClose' },
     attr = {
       fg = color,
     },
