@@ -36,7 +36,7 @@ local function devicon(bufnr, isSelected)
   return ''
 end
 
-local function title(bufnr)
+local function title(bufnr, isSelected)
   local name
   local info = getinfo(bufnr)
 
@@ -49,8 +49,7 @@ local function title(bufnr)
   else
     name = vim.fn.pathshorten(vim.fn.fnamemodify(info.file, ':p:~:t'))
   end
-  -- return '%#TabLineSel#' .. name
-  return name
+  return (isSelected and '%#TabLineSel#' or '%#TabLine') .. name
 end
 
 local function modified(bufnr)
@@ -69,7 +68,7 @@ local function cell(index)
 
   return hl .. '%' .. index .. 'T' .. ' ' ..
       devicon(bufnr, isSelected) ..
-      title(bufnr) .. ' ' ..
+      title(bufnr, isSelected) .. ' ' ..
       modified(bufnr) .. '%T'
 end
 
