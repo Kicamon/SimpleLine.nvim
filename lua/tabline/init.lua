@@ -49,7 +49,8 @@ local function title(bufnr)
   else
     name = vim.fn.pathshorten(vim.fn.fnamemodify(info.file, ':p:~:t'))
   end
-  return '%#TabLineSel#' .. name
+  -- return '%#TabLineSel#' .. name
+  return name
 end
 
 local function modified(bufnr)
