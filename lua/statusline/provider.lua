@@ -47,7 +47,7 @@ function pd.mode()
       return alias[mode] or alias[string.sub(mode, 1, 1)] or 'UNK'
     end,
     name = 'mode',
-    event = { 'ModeChanged', 'BufEnter' },
+    event = { 'ModeChanged', 'BufEnter', 'TermClose' },
   }
 
   result.attr = stl_attr("StatusLineMode", true)
@@ -203,18 +203,6 @@ function pd.sep()
   }
 end
 
-function pd.lnumcol()
-  local result = {
-    stl   = '%-2.(%l:%c%)  %P',
-    name  = 'linecol',
-    event = { 'CursorHold' },
-  }
-
-  result.attr = stl_attr('StatlsLineLnum', true)
-  result.attr.bold = true
-  return result
-end
-
 local function get_diag_sign(type)
   local prefix = 'DiagnosticSign'
   for _, item in ipairs(vim.fn.sign_getdefined()) do
@@ -317,6 +305,18 @@ function pd.encoding()
     event = { 'BufEnter' },
   }
   result.attr = stl_attr("StatusLineEncoding", true)
+  result.attr.bold = true
+  return result
+end
+
+function pd.lnumcol()
+  local result = {
+    stl   = '%-2.(%l:%c%)  %P',
+    name  = 'linecol',
+    event = { 'BufEnter' },
+  }
+
+  result.attr = stl_attr('StatlsLineLnum', true)
   result.attr.bold = true
   return result
 end
