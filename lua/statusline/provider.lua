@@ -173,9 +173,9 @@ end
 function pd.branch()
   local result = {
     stl = function()
-      local icon = '  '
+      local icon = ' '
       local res = gitsigns_data('head')
-      return #res > 0 and res .. icon or 'UNKOWN'
+      return #res > 0 and icon .. res or 'UNKOWN'
     end,
     name = 'gitbranch',
     event = { 'GitSignsUpdate' },
@@ -200,6 +200,26 @@ function pd.sep()
       background = 'NONE',
       foreground = 'NONE',
     },
+  }
+end
+
+function pd.sepl()
+  return {
+    stl = ' ╲ ',
+    name = 'sepl',
+    attr = {
+      foreground = '#3c3836'
+    }
+  }
+end
+
+function pd.sepr()
+  return {
+    stl = ' ╱ ',
+    name = 'sepr',
+    attr = {
+      foreground = '#3c3836'
+    }
   }
 end
 
@@ -373,7 +393,7 @@ function pd.encoding()
     ['dos'] = ' ',
   }
   local result = {
-    stl = vim.o.fileencoding .. ' ' .. map[vim.o.ff],
+    stl = ' ' .. map[vim.o.ff] .. vim.o.fileencoding,
     name = 'fileformat',
     event = { 'BufEnter' },
   }

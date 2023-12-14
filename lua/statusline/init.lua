@@ -16,11 +16,11 @@ local function default()
     p.sep,
     p.mode,
     --
-    p.sep,
+    p.sepl,
     p.fileicon,
     p.fileinfo,
     --
-    p.sep,
+    p.sepl,
     p.branch,
     p.sep,
     p.gitadd,
@@ -28,6 +28,9 @@ local function default()
     p.gitdelete,
     --
     p.pad,
+    p.readonly,
+    --
+    p.sep,
     p.diagError,
     p.diagWarn,
     p.diagInfo,
@@ -36,12 +39,10 @@ local function default()
     p.sep,
     p.lsp,
     --
-    p.sep,
-    p.readonly,
-    --
+    p.sepr,
     p.encoding,
-    p.sep,
     --
+    p.sepr,
     p.lnumcol,
     p.sep,
     --
