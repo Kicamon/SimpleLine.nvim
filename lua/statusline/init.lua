@@ -34,6 +34,9 @@ local function default()
     p.diagHint,
     --
     p.sep,
+    p.lsp,
+    --
+    p.sep,
     p.readonly,
     --
     p.encoding,
@@ -45,7 +48,7 @@ local function default()
   }
 end
 
-local function whk_init(event, pieces)
+local function spl_init(event, pieces)
   Simple_Status.cache = {}
   for i, e in ipairs(Simple_Status.elements) do
     local res = e()
@@ -77,7 +80,7 @@ local stl_render = co.create(function(event)
   local pieces = {}
   while true do
     if not Simple_Status.cache then
-      whk_init(event, pieces)
+      spl_init(event, pieces)
     else
       for i, item in ipairs(Simple_Status.cache) do
         if item.event and vim.tbl_contains(item.event, event) and type(item.stl) == 'function' then

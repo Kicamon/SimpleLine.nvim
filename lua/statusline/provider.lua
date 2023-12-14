@@ -277,6 +277,79 @@ function pd.diagHint()
   return result
 end
 
+local function get_progress_messages()
+  local new_messages = {}
+  local progress_remove = {}
+
+  for _, client in ipairs(vim.lsp.get_active_clients()) do
+    local messages = client.messages
+    local data = messages
+    for token, ctx in pairs(data.progress) do
+      local new_report = {
+        name = data.name,
+        title = ctx.title or 'empty title',
+        message = ctx.message,
+        percentage = ctx.percentage,
+        done = ctx.done,
+        progress = true,
+      }
+      table.insert(new_messages, new_report)
+
+      if ctx.done then
+        table.insert(progress_remove, { client = client, token = token })
+      end
+    end
+  end
+
+  if not vim.tbl_isempty(progress_remove) then
+    for _, item in ipairs(progress_remove) do
+      item.client.messages.progress[item.token] = nil
+    end
+    return {}
+  end
+
+  return new_messages
+end
+
+function pd.lsp()
+  local function lsp_stl(event)
+    local new_messages = get_progress_messages()
+    local msg = ''
+
+    for i, item in ipairs(new_messages) do
+      if i == #new_messages then
+        msg = item.title
+        if item.message then
+          msg = msg .. ' ' .. item.message
+        end
+        if item.percentage then
+          msg = msg .. ' ' .. item.percentage .. '%'
+        end
+      end
+    end
+
+    if #msg == 0 and event ~= 'LspDetach' then
+      local client = vim.lsp.get_active_clients({ bufnr = 0 })
+      if #client ~= 0 then
+        msg = client[1].name
+      end
+    end
+    return '%.40{"' .. msg .. '"}'
+  end
+
+  local result = {
+    stl = lsp_stl,
+    name = 'Lsp',
+    event = { 'LspProgressUpdate', 'LspAttach', 'LspDetach' },
+  }
+
+  if not pd.initialized then
+    result.attr = stl_attr("StatusLineLsp")
+    result.attr.bold = true
+  end
+  return result
+end
+
 function pd.readonly()
   local result = {
     stl = function()
