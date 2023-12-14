@@ -112,7 +112,7 @@ function Simple_Status.setup()
   })
 
   local events =
-  { 'DiagnosticChanged', 'ModeChanged', 'BufEnter', 'BufWritePost', 'LspAttach', 'LspDetach', 'TermClose' }
+  { 'DiagnosticChanged', 'ModeChanged', 'BufEnter', 'BufWritePost', 'LspAttach', 'LspDetach', 'TermLeave' }
   api.nvim_create_autocmd(events, {
     callback = function(arg)
       vim.schedule(function()

@@ -47,7 +47,7 @@ function pd.mode()
       return alias[mode] or alias[string.sub(mode, 1, 1)] or 'UNK'
     end,
     name = 'mode',
-    event = { 'ModeChanged', 'BufEnter', 'TermClose' },
+    event = { 'ModeChanged', 'BufEnter', 'TermLeave' },
   }
 
   result.attr = stl_attr("StatusLineMode", true)
