@@ -393,7 +393,7 @@ function pd.encoding()
     ['dos'] = ' ',
   }
   local result = {
-    stl = ' ' .. map[vim.o.ff] .. vim.o.fileencoding,
+    stl = map[vim.o.ff] .. vim.o.fileencoding,
     name = 'fileformat',
     event = { 'BufEnter' },
   }
