@@ -189,6 +189,10 @@ function pd.pad()
   return {
     stl = '%=',
     name = 'pad',
+    attr = {
+      background = 'NONE',
+      foreground = 'NONE',
+    },
   }
 end
 
