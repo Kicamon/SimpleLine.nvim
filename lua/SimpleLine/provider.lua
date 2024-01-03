@@ -3,9 +3,8 @@ local pd = {}
 
 pd.initialized = false
 
-local function stl_attr(group, trans)
+local function stl_attr(group)
   local color = api.nvim_get_hl_by_name(group, true)
-  trans = trans or false
   return {
     bg = 'NONE',
     fg = color.foreground,
@@ -50,7 +49,7 @@ function pd.mode()
     event = { 'ModeChanged', 'BufEnter', 'TermLeave' },
   }
 
-  result.attr = stl_attr("StatusLineMode", true)
+  result.attr = stl_attr("StatusLineMode")
   result.attr.bold = true
 
   return result
@@ -98,8 +97,25 @@ function pd.fileinfo()
     event = { 'BufEnter', 'TermClose' },
   }
 
-  result.attr = stl_attr('StatusLineFileInfo', true)
+  result.attr = stl_attr('StatusLineFileInfo')
   result.attr.bold = true
+
+  return result
+end
+
+function pd.modified()
+  local function stl_modified()
+    local modicon = vim.fn.getbufvar(1, '&modified') == 1 and ' ●' or ''
+    return modicon
+  end
+  local result = {
+    stl = stl_modified,
+    name = 'modified',
+    event = { 'BufEnter', 'BufWritePost', 'BufModifiedSet' },
+    attr = {
+      fg = '#ff461f',
+    }
+  }
 
   return result
 end
@@ -133,7 +149,7 @@ function pd.gitadd()
     event = { 'GitSignsUpdate' },
   }
   if not pd.initialized then
-    result.attr = stl_attr('DiffAdd', true)
+    result.attr = stl_attr('DiffAdd')
   end
   return result
 end
@@ -149,7 +165,7 @@ function pd.gitchange()
   }
 
   if not pd.initialized then
-    result.attr = stl_attr('DiffChange', true)
+    result.attr = stl_attr('DiffChange')
   end
   return result
 end
@@ -165,7 +181,7 @@ function pd.gitdelete()
   }
 
   if not pd.initialized then
-    result.attr = stl_attr('DiffDelete', true)
+    result.attr = stl_attr('DiffDelete')
   end
   return result
 end
@@ -180,7 +196,7 @@ function pd.branch()
     name = 'gitbranch',
     event = { 'GitSignsUpdate' },
   }
-  result.attr = stl_attr('StatlsLineBranch', true)
+  result.attr = stl_attr('StatlsLineBranch')
   result.attr.bold = true
   return result
 end
@@ -254,7 +270,7 @@ function pd.diagError()
     event = { 'DiagnosticChanged', 'BufEnter' },
   }
   if not pd.initialized then
-    result.attr = stl_attr('DiagnosticError', true)
+    result.attr = stl_attr('DiagnosticError')
   end
   return result
 end
@@ -268,7 +284,7 @@ function pd.diagWarn()
     event = { 'DiagnosticChanged', 'BufEnter' },
   }
   if not pd.initialized then
-    result.attr = stl_attr('DiagnosticWarn', true)
+    result.attr = stl_attr('DiagnosticWarn')
   end
   return result
 end
@@ -282,7 +298,7 @@ function pd.diagInfo()
     event = { 'DiagnosticChanged', 'BufEnter' },
   }
   if not pd.initialized then
-    result.attr = stl_attr('DiagnosticInfo', true)
+    result.attr = stl_attr('DiagnosticInfo')
   end
   return result
 end
@@ -296,7 +312,7 @@ function pd.diagHint()
     event = { 'DiagnosticChanged', 'BufEnter' },
   }
   if not pd.initialized then
-    result.attr = stl_attr('DiagnosticHint', true)
+    result.attr = stl_attr('DiagnosticHint')
   end
   return result
 end
@@ -386,7 +402,7 @@ function pd.readonly()
     name = 'readonly',
     event = { 'BufEnter' },
   }
-  result.attr = stl_attr("StatusLineReadOnly", true)
+  result.attr = stl_attr("StatusLineReadOnly")
   return result
 end
 
@@ -401,7 +417,7 @@ function pd.encoding()
     name = 'fileformat',
     event = { 'BufEnter' },
   }
-  result.attr = stl_attr("StatusLineEncoding", true)
+  result.attr = stl_attr("StatusLineEncoding")
   result.attr.bold = true
   return result
 end
@@ -413,7 +429,7 @@ function pd.lnumcol()
     event = { 'BufEnter' },
   }
 
-  result.attr = stl_attr('StatlsLineLnum', true)
+  result.attr = stl_attr('StatlsLineLnum')
   result.attr.bold = true
   return result
 end
