@@ -10,7 +10,7 @@ local function stl_hl(name, attr)
 end
 
 local function default()
-  local p = require('statusline.provider')
+  local p = require('SimpleLine.provider')
   return {
     --
     p.sep,
@@ -73,7 +73,7 @@ local function spl_init(event, pieces)
       stl = res.stl,
     }
   end
-  require('statusline.provider').initialized = true
+  require('SimpleLine.provider').initialized = true
   return table.concat(pieces, '')
 end
 
