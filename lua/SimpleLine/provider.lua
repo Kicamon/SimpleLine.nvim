@@ -105,7 +105,7 @@ end
 
 function pd.modified()
   local function stl_modified()
-    local modicon = vim.api.nvim_buf_get_option(0, 'modified') == 1 and ' ●' or ''
+    local modicon = vim.api.nvim_buf_get_option(0, 'modified') and ' ●' or ''
     return modicon
   end
   local result = {
