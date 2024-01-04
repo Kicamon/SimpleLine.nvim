@@ -29,6 +29,9 @@ local function default()
     p.gitdelete,
     --
     p.pad,
+    p.recording,
+    --
+    p.pad,
     p.readonly,
     --
     p.sep,
@@ -114,7 +117,7 @@ function Simple_Status.setup()
 
   local events =
   { 'DiagnosticChanged', 'ModeChanged', 'BufEnter', 'BufWritePost', 'BufModifiedSet', 'LspAttach', 'LspDetach',
-    'TermLeave' }
+    'TermLeave', 'RecordingEnter', 'RecordingLeave' }
   api.nvim_create_autocmd(events, {
     callback = function(arg)
       vim.schedule(function()

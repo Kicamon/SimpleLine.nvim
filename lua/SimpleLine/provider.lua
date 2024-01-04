@@ -243,6 +243,28 @@ function pd.sepr()
   }
 end
 
+function pd.recording()
+  local function stl_recording()
+    local stl = vim.fn.reg_recording()
+    if stl ~= '' then
+      stl = '@' .. stl
+    end
+    return stl
+  end
+  local result = {
+    stl   = stl_recording,
+    name  = 'recording',
+    attr  = {
+      foreground = '#fabd2f',
+    },
+    event = { 'RecordingEnter', 'RecordingLeave' },
+  }
+
+  result.attr.bold = true
+
+  return result
+end
+
 local function get_diag_sign(type)
   local prefix = 'DiagnosticSign'
   for _, item in ipairs(vim.fn.sign_getdefined()) do
