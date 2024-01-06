@@ -1,11 +1,10 @@
 # SimpleLine.nvim
 ## Features
 - minimalist
-- statusline and bufferline
+- statusline
 - not support configuration
 
 ## Screenshots
-![tabline](img/tabline.png)
 ![statusline](img/statusline.png)
 
 ## Installation
@@ -18,7 +17,6 @@
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     require("statusline").setup()
-    require("tabline").setup()
   end
 }
 ```
@@ -31,7 +29,6 @@
 ```vim
 Plug "Kicamon/SimpleLine.nvim"
 lua require("statusline").setup()
-lua require("tabline").setup()
 ```
 
 </details>
@@ -44,9 +41,6 @@ StatlsLineBranch
 StatlsLineLnum
 StatusLineReadOnly
 StatusLineEncoding
-TabLineTop
-TabLineSel
-TabLine
 ```
 
 ### License MIT

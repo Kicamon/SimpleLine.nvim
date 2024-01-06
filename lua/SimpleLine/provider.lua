@@ -89,7 +89,8 @@ end
 function pd.fileinfo()
   local function stl_file()
     local fname = api.nvim_buf_get_name(0)
-    return vim.fn.pathshorten(vim.fn.fnamemodify(fname, ':p:~:t'))
+    fname = vim.fn.pathshorten(vim.fn.fnamemodify(fname, ':p:~:t'))
+    return fname
   end
   local result = {
     stl = stl_file,
