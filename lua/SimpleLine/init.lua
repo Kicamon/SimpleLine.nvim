@@ -1,12 +1,12 @@
 local co, api = coroutine, vim.api
-local Simple_Status = {}
+local SimpleLine = {}
 
 local function stl_format(name, val)
-  return '%#Simple_Status' .. name .. '#' .. val .. '%*'
+  return '%#SimpleLine' .. name .. '#' .. val .. '%*'
 end
 
 local function stl_hl(name, attr)
-  api.nvim_set_hl(0, 'Simple_Status' .. name, attr)
+  api.nvim_set_hl(0, 'SimpleLine' .. name, attr)
 end
 
 local function default()
@@ -54,8 +54,8 @@ local function default()
 end
 
 local function spl_init(event, pieces)
-  Simple_Status.cache = {}
-  for i, e in ipairs(Simple_Status.elements) do
+  SimpleLine.cache = {}
+  for i, e in ipairs(SimpleLine.elements) do
     local res = e()
 
     if res.event and vim.tbl_contains(res.event, event) then
@@ -71,7 +71,7 @@ local function spl_init(event, pieces)
       stl_hl(res.name, res.attr)
     end
 
-    Simple_Status.cache[i] = {
+    SimpleLine.cache[i] = {
       event = res.event,
       name = res.name,
       stl = res.stl,
@@ -84,12 +84,12 @@ end
 local stl_render = co.create(function(event)
   local pieces = {}
   while true do
-    if not Simple_Status.cache then
+    if not SimpleLine.cache then
       spl_init(event, pieces)
     else
-      for i, item in ipairs(Simple_Status.cache) do
+      for i, item in ipairs(SimpleLine.cache) do
         if item.event and vim.tbl_contains(item.event, event) and type(item.stl) == 'function' then
-          local comp = Simple_Status.elements[i]
+          local comp = SimpleLine.elements[i]
           local res = comp()
           if res.attr then
             stl_hl(item.name, res.attr)
@@ -103,8 +103,8 @@ local stl_render = co.create(function(event)
   end
 end)
 
-function Simple_Status.setup()
-  Simple_Status.elements = default()
+function SimpleLine.setup()
+  SimpleLine.elements = default()
 
   api.nvim_create_autocmd({ 'User' }, {
     pattern = { 'LspProgressUpdate', 'GitSignsUpdate' },
@@ -127,4 +127,4 @@ function Simple_Status.setup()
   })
 end
 
-return Simple_Status
+return SimpleLine
