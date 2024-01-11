@@ -73,7 +73,9 @@ function pd.fileicon()
     init_devicon()
   end
 
-  local icon, color = resolve.get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+  local buf_type = vim.bo.buftype == 'terminal' and 'zsh' or ''
+  local file_type = vim.bo.filetype ~= '' and vim.bo.filetype or buf_type
+  local icon, color = resolve.get_icon_color_by_filetype(file_type, { default = true })
   return {
     stl = function()
       return icon .. ' '
@@ -90,6 +92,7 @@ function pd.fileinfo()
   local function stl_file()
     local fname = api.nvim_buf_get_name(0)
     fname = vim.fn.pathshorten(vim.fn.fnamemodify(fname, ':p:~:t'))
+    fname = fname ~= '' and fname or vim.bo.filetype
     return fname
   end
   local result = {
