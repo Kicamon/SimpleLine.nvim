@@ -128,7 +128,7 @@ function pd.readonly()
   local result = {
     stl = function()
       if vim.bo.readonly then
-        return ' '
+        return ' '
       else
         return ''
       end
