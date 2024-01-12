@@ -124,6 +124,24 @@ function pd.modified()
   return result
 end
 
+function pd.readonly()
+  local result = {
+    stl = function()
+      if vim.bo.readonly then
+        return ' '
+      else
+        return ''
+      end
+    end,
+    name = 'readonly',
+    event = { 'BufEnter' },
+    attr = {
+      fg = "#ff461f"
+    }
+  }
+  return result
+end
+
 local function gitsigns_data(type)
   if not vim.b.gitsigns_status_dict then
     return ''
@@ -413,22 +431,6 @@ function pd.lsp()
     result.attr = stl_attr("StatusLineLsp")
     result.attr.bold = true
   end
-  return result
-end
-
-function pd.readonly()
-  local result = {
-    stl = function()
-      if vim.bo.readonly then
-        return ' '
-      else
-        return ''
-      end
-    end,
-    name = 'readonly',
-    event = { 'BufEnter' },
-  }
-  result.attr = stl_attr("StatusLineReadOnly")
   return result
 end
 

@@ -20,6 +20,7 @@ local function default()
     p.fileicon,
     p.fileinfo,
     p.modified,
+    p.readonly,
     --
     p.sepl,
     p.branch,
@@ -32,9 +33,6 @@ local function default()
     p.recording,
     --
     p.pad,
-    p.readonly,
-    --
-    p.sep,
     p.diagError,
     p.diagWarn,
     p.diagInfo,
