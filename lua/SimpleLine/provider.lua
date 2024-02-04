@@ -434,6 +434,21 @@ function pd.lsp()
   return result
 end
 
+function pd.competitest()
+  local function cp_stl()
+    return vim.g.cp and '󰆊 ' or ''
+  end
+  local result = {
+    stl = cp_stl,
+    name = 'competitest',
+    event = { 'CmdlineLeave' },
+    attr = {
+      foreground = '#a9a1e1',
+    }
+  }
+  return result
+end
+
 function pd.encoding()
   local map = {
     ['unix'] = ' ',
