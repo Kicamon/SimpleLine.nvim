@@ -436,7 +436,7 @@ end
 
 function pd.competitest()
   local function cp_stl()
-    return vim.g.cp and '󰆊 ' or ''
+    return vim.g.cp and '󰈼 ' or ''
   end
   local result = {
     stl = cp_stl,

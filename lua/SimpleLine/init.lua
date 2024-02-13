@@ -124,6 +124,16 @@ function SimpleLine.setup()
       end)
     end,
   })
+
+  local events_tab = { 'BufEnter', 'BufWritePost', 'BufModifiedSet', 'TabNew', 'TabEnter', 'TabLeave', 'TermClose' }
+  local update = require('SimpleLine.tabline').update
+  vim.api.nvim_create_autocmd(events_tab, {
+    callback = function()
+      update()
+    end
+  })
+  vim.keymap.set('n', 'tmp', function() update('-') end, {})
+  vim.keymap.set('n', 'tmn', function() update('+') end, {})
 end
 
 return SimpleLine
