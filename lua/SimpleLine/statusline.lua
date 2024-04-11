@@ -287,6 +287,33 @@ function pd.recording()
   return result
 end
 
+function pd.vnumber()
+  local function stl_vnumber()
+    local sl, sr = vim.fn.getpos('v')[2], vim.fn.getpos('v')[3]
+    local el, er = vim.fn.getpos('.')[2], vim.fn.getpos('.')[3]
+    local str = ''
+    if sl == el then
+      str = math.abs(sr - er) + 1
+    else
+      str = math.abs(sl - el) + 1
+    end
+    if vim.api.nvim_get_mode().mode ~= 'v' and vim.api.nvim_get_mode().mode ~= 'V' then
+      str = ''
+    end
+    return str
+  end
+  local result = {
+    stl = stl_vnumber,
+    name = 'vnumber',
+    attr = {
+      foreground = '#afd787',
+    },
+    event = { 'CursorMoved', 'ModeChanged' },
+  }
+
+  return result
+end
+
 local function get_diag_sign(type)
   local prefix = 'DiagnosticSign'
   for _, item in ipairs(vim.fn.sign_getdefined()) do

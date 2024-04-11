@@ -31,6 +31,7 @@ local function default()
     --
     p.pad,
     p.recording,
+    p.vnumber,
     --
     p.pad,
     p.diagError,
@@ -116,7 +117,7 @@ function SimpleLine.setup()
 
   local events =
   { 'DiagnosticChanged', 'ModeChanged', 'BufEnter', 'BufWritePost', 'BufModifiedSet', 'LspAttach', 'LspDetach',
-    'TermLeave', 'RecordingEnter', 'RecordingLeave', 'CmdlineLeave' }
+    'TermLeave', 'RecordingEnter', 'RecordingLeave', 'CmdlineLeave', 'CursorMoved' }
   api.nvim_create_autocmd(events, {
     callback = function(arg)
       vim.schedule(function()
