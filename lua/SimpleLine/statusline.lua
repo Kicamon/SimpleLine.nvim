@@ -1,13 +1,13 @@
 local api = vim.api
 local pd = {}
 
-pd.initialized = false
+pd.initfalseialized = false
 
 local function stl_attr(group)
-  local color = api.nvim_get_hl_by_name(group, true)
+  local color = api.nvim_get_hl(0, { name = group, link = true })
   return {
     bg = 'NONE',
-    fg = color.foreground,
+    fg = color.fg,
   }
 end
 
@@ -109,7 +109,7 @@ end
 
 function pd.modified()
   local function stl_modified()
-    local modicon = vim.api.nvim_buf_get_option(0, 'modified') and ' ●' or ''
+    local modicon = api.nvim_get_option_value('modified', { buf = 0 }) and ' ●' or ''
     return modicon
   end
   local result = {
@@ -293,9 +293,9 @@ function pd.vnumber()
     local el, er = vim.fn.getpos('.')[2], vim.fn.getpos('.')[3]
     local str = ''
     if sl == el then
-      str = math.abs(sr - er) + 1
+      str = tostring(math.abs(sr - er) + 1)
     else
-      str = math.abs(sl - el) + 1
+      str = tostring(math.abs(sl - el) + 1)
     end
     if vim.api.nvim_get_mode().mode ~= 'v' and vim.api.nvim_get_mode().mode ~= 'V' then
       str = ''
@@ -324,7 +324,7 @@ local function get_diag_sign(type)
 end
 
 local function diagnostic_info(severity)
-  if vim.diagnostic.is_disabled(0) then
+  if vim.diagnostic.is_enabled() then
     return ''
   end
   local tbl = { 'Error', 'Warn', 'Info', 'Hint' }
@@ -388,59 +388,12 @@ function pd.diagHint()
   return result
 end
 
-local function get_progress_messages()
-  local new_messages = {}
-  local progress_remove = {}
-
-  for _, client in ipairs(vim.lsp.get_active_clients()) do
-    local messages = client.messages
-    local data = messages
-    for token, ctx in pairs(data.progress) do
-      local new_report = {
-        name = data.name,
-        title = ctx.title or 'empty title',
-        message = ctx.message,
-        percentage = ctx.percentage,
-        done = ctx.done,
-        progress = true,
-      }
-      table.insert(new_messages, new_report)
-
-      if ctx.done then
-        table.insert(progress_remove, { client = client, token = token })
-      end
-    end
-  end
-
-  if not vim.tbl_isempty(progress_remove) then
-    for _, item in ipairs(progress_remove) do
-      item.client.messages.progress[item.token] = nil
-    end
-    return {}
-  end
-
-  return new_messages
-end
-
 function pd.lsp()
   local function lsp_stl(event)
-    local new_messages = get_progress_messages()
     local msg = ''
 
-    for i, item in ipairs(new_messages) do
-      if i == #new_messages then
-        msg = item.title
-        if item.message then
-          msg = msg .. ' ' .. item.message
-        end
-        if item.percentage then
-          msg = msg .. ' ' .. item.percentage .. '%'
-        end
-      end
-    end
-
     if #msg == 0 and event ~= 'LspDetach' then
-      local client = vim.lsp.get_active_clients({ bufnr = 0 })
+      local client = vim.lsp.get_clients({ buffer = 0 })
       if #client ~= 0 then
         msg = client[1].name
       end
