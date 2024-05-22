@@ -53,49 +53,42 @@ local function default()
   }
 end
 
-local function spl_init(event, pieces)
+local function spl_init()
+  local pieces = {}
   SimpleLine.cache = {}
-  for i, e in ipairs(SimpleLine.elements) do
-    local res = e()
-
-    if res.event and vim.tbl_contains(res.event, event) then
-      local val = type(res.stl) == 'function' and res.stl() or res.stl
-      pieces[#pieces + 1] = stl_format(res.name, val)
-    elseif type(res.stl) == 'string' then
-      pieces[#pieces + 1] = stl_format(res.name, res.stl)
+  for key, item in ipairs(SimpleLine.elements) do
+    if type(item().stl) == 'function' then
+      pieces[#pieces + 1] = stl_format(item().name, item().stl())
+    elseif type(item().stl) == 'string' then
+      pieces[#pieces + 1] = stl_format(item().name, item().stl)
     else
-      pieces[#pieces + 1] = stl_format(res.name, '')
+      pieces[#pieces + 1] = stl_format(item().name, '')
     end
 
-    if res.attr then
-      stl_hl(res.name, res.attr)
+    if item().attr then
+      stl_hl(item().name, item().attr)
     end
 
-    SimpleLine.cache[i] = {
-      event = res.event,
-      name = res.name,
-      stl = res.stl,
+    SimpleLine.cache[key] = {
+      event = item().event,
+      name = item().name,
+      stl = item().stl,
     }
   end
-  require('SimpleLine.statusline').initialized = true
-  return table.concat(pieces, '')
+  return pieces
 end
 
 local stl_render = co.create(function(event)
-  local pieces = {}
+  local pieces = spl_init()
   while true do
-    if not SimpleLine.cache then
-      spl_init(event, pieces)
-    else
-      for i, item in ipairs(SimpleLine.cache) do
-        if item.event and vim.tbl_contains(item.event, event) and type(item.stl) == 'function' then
-          local comp = SimpleLine.elements[i]
-          local res = comp()
-          if res.attr then
-            stl_hl(item.name, res.attr)
-          end
-          pieces[i] = stl_format(item.name, res.stl(event))
+    for i, item in ipairs(SimpleLine.cache) do
+      if item.event and vim.tbl_contains(item.event, event) and type(item.stl) == 'function' then
+        local comp = SimpleLine.elements[i]
+        local res = comp()
+        if res.attr then
+          stl_hl(item.name, res.attr)
         end
+        pieces[i] = stl_format(item.name, res.stl(event))
       end
     end
     vim.opt.stl = table.concat(pieces)

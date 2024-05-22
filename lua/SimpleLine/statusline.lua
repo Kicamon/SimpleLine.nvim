@@ -1,7 +1,7 @@
 local api = vim.api
 local pd = {}
 
-pd.initfalseialized = false
+pd.initialized = false
 
 local function stl_attr(group)
   local color = api.nvim_get_hl(0, { name = group, link = true })
@@ -109,7 +109,7 @@ end
 
 function pd.modified()
   local function stl_modified()
-    local modicon = api.nvim_get_option_value('modified', { buf = 0 }) and ' ●' or ''
+    local modicon = vim.api.nvim_get_option_value('modified', { buf = 0 }) and ' ●' or ''
     return modicon
   end
   local result = {
@@ -213,7 +213,7 @@ function pd.branch()
     stl = function()
       local icon = ' '
       local res = gitsigns_data('head')
-      return #res > 0 and icon .. res or 'UNKOWN'
+      return #res > 0 and icon .. res or ''
     end,
     name = 'gitbranch',
     event = { 'GitSignsUpdate' },
@@ -393,7 +393,7 @@ function pd.lsp()
     local msg = ''
 
     if #msg == 0 and event ~= 'LspDetach' then
-      local client = vim.lsp.get_clients({ buffer = 0 })
+      local client = vim.lsp.get_clients({ bufnr = 0 })
       if #client ~= 0 then
         msg = client[1].name
       end
