@@ -4,9 +4,6 @@
 - statusline
 - not support configuration
 
-## Screenshots
-![statusline](img/statusline.png)
-
 ## Installation
 <details>
 <summary>lazy.nvim</summary>
