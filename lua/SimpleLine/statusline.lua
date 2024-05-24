@@ -302,7 +302,7 @@ local function diagnostic_info(severity)
     ---@diagnostic disable-next-line: param-type-mismatch
     local signs = vim.tbl_get(vim.diagnostic.config(), 'signs', 'text')
     local count = #vim.diagnostic.get(0, { severity = severity })
-    return count > 0 and signs[severity] .. count .. ' ' or ''
+    return count > 0 and ' ' .. signs[severity] .. count or ''
   end
 end
 
