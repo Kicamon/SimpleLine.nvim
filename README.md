@@ -32,12 +32,12 @@ lua require("statusline").setup()
 
 ## Heilght groups
 ```
-StatusLineMode
-StatusLineFileInfo
-StatlsLineBranch
-StatlsLineLnum
-StatusLineReadOnly
-StatusLineEncoding
+StatusLineMode = { fg = "#afd787" },
+StatusLineFileInfo = { fg = "#88abda" },
+StatusLineBranch = { fg = "#88abda" },
+StatusLineLsp = { fg = "#a9a1e1" },
+StatusLineEncoding = { fg = "#afd787" },
+StatlsLineLnum = { fg = "#afd787" },
 ```
 
 ### License MIT

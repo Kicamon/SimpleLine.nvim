@@ -10,6 +10,7 @@ local function default()
     p.sep(),
     p.mode(),
     p.sepl(),
+    p.readonly(),
     p.fileinfo(),
     p.modified(),
     p.sepl(),

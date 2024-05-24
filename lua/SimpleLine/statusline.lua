@@ -105,6 +105,17 @@ function pd.mode()
   return result
 end
 
+function pd.readonly()
+  return {
+    name = 'readonly',
+    stl = '%{&readonly?" ":""}',
+    event = { 'BufEnter' },
+    attr = {
+      fg = '#ff461f',
+    }
+  }
+end
+
 function pd.fileinfo()
   local result = {
     stl = '%t',
@@ -167,7 +178,7 @@ function pd.gitinfo(git_t)
     name = 'git' .. git_t,
     event = { 'User GitSignsUpdate', 'BufEnter' },
   }
-  result.attr = stl_attr(git_t == 'head' and 'StatlsLineBranch' or 'Diff' .. alias[git_t])
+  result.attr = stl_attr(git_t == 'head' and 'StatusLineBranch' or 'Diff' .. alias[git_t])
   result.attr.bold = true
   return result
 end
