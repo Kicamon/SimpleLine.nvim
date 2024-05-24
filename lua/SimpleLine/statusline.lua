@@ -302,7 +302,7 @@ local function diagnostic_info(severity)
     ---@diagnostic disable-next-line: param-type-mismatch
     local signs = vim.tbl_get(vim.diagnostic.config(), 'signs', 'text')
     local count = #vim.diagnostic.get(0, { severity = severity })
-    return count > 0 and signs[severity] .. count or ''
+    return count > 0 and signs[severity] .. count .. ' ' or ''
   end
 end
 
@@ -312,7 +312,7 @@ function pd.diagnostic(diag_t)
     stl = diagnostic_info(diag_t),
     name = 'diag' .. vim.diagnostic.severity[diag_t],
     event = { 'DiagnosticChanged', 'BufEnter' },
-    attr = stl_attr('Diagnostic' .. vim.diagnostic.severity[diag_t]) .. ' ',
+    attr = stl_attr('Diagnostic' .. vim.diagnostic.severity[diag_t]),
   }
 end
 
