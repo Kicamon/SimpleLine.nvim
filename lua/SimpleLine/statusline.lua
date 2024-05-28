@@ -105,17 +105,6 @@ function pd.mode()
   return result
 end
 
-function pd.readonly()
-  return {
-    name = 'readonly',
-    stl = '%{&readonly?" ":""}',
-    event = { 'BufEnter' },
-    attr = {
-      fg = '#ff461f',
-    }
-  }
-end
-
 function pd.fileinfo()
   local result = {
     stl = '%t',
@@ -130,8 +119,19 @@ end
 function pd.modified()
   return {
     name = 'modified',
-    stl = '%{&modified?" ●":""}',
+    stl = '%{&modified?" [+]":""}',
     event = { 'BufModifiedSet' },
+    attr = {
+      fg = '#ff461f',
+    }
+  }
+end
+
+function pd.readonly()
+  return {
+    name = 'readonly',
+    stl = '%{&readonly?"[-]":""}',
+    event = { 'BufEnter' },
     attr = {
       fg = '#ff461f',
     }
