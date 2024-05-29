@@ -119,10 +119,11 @@ end
 function pd.modified()
   return {
     name = 'modified',
-    stl = '%{&modified?" [+]":""}',
+    stl = '%{&modified?"[+]":""}',
     event = { 'BufModifiedSet' },
     attr = {
       fg = '#ff461f',
+      bold = true,
     }
   }
 end
@@ -134,6 +135,7 @@ function pd.readonly()
     event = { 'BufEnter' },
     attr = {
       fg = '#ff461f',
+      bold = true,
     }
   }
 end
