@@ -117,27 +117,25 @@ function pd.fileinfo()
 end
 
 function pd.modified()
-  return {
+  local result = {
     name = 'modified',
     stl = '%{&modified?"[+]":""}',
     event = { 'BufModifiedSet' },
-    attr = {
-      fg = '#ff461f',
-      bold = true,
-    }
   }
+  result.attr = stl_attr('StatusLineFileInfo')
+  result.attr.bold = true
+  return result
 end
 
 function pd.readonly()
-  return {
+  local result = {
     name = 'readonly',
     stl = '%{&readonly?"[-]":""}',
     event = { 'BufEnter' },
-    attr = {
-      fg = '#ff461f',
-      bold = true,
-    }
   }
+  result.attr = stl_attr('StatusLineFileInfo')
+  result.attr.bold = true
+  return result
 end
 
 local function gitsigns_data(git_t)
