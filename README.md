@@ -13,7 +13,7 @@
   "Kicamon/SimpleLine.nvim",
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
-    require("statusline").setup()
+    require("SimpleLine").setup()
   end
 }
 ```
@@ -25,7 +25,7 @@
 
 ```vim
 Plug "Kicamon/SimpleLine.nvim"
-lua require("statusline").setup()
+lua require("SimpleLine").setup()
 ```
 
 </details>
