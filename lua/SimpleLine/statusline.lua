@@ -45,8 +45,8 @@ function pd.sepl()
     stl = ' ╲ ',
     name = 'sepl',
     attr = {
-      foreground = '#3c3836'
-    }
+      foreground = '#3c3836',
+    },
   }
 end
 
@@ -55,35 +55,35 @@ function pd.sepr()
     stl = ' ╱ ',
     name = 'sepr',
     attr = {
-      foreground = '#3c3836'
-    }
+      foreground = '#3c3836',
+    },
   }
 end
 
 local function alias_mode()
   return {
-    ['n']   = '󰋜',
-    ['no']  = '󰋜',
+    ['n'] = '󰋜',
+    ['no'] = '󰋜',
     ['niI'] = '󰋜',
     ['niR'] = '󰋜',
     ['no'] = '󰋜',
     ['niV'] = '󰋜',
     ['nov'] = '󰋜',
     ['noV'] = '󰋜',
-    ['i']   = '',
-    ['ic']  = '',
-    ['ix']  = '',
-    ['s']   = '',
-    ['S']   = '',
-    ['v']   = '󰈈',
-    ['V']   = '󰉸',
-    ['']   = '󰉸',
-    ['r']   = ' ',
-    ['r?']  = '',
-    ['R']   = '',
-    ['c']   = '',
-    ['t']   = '',
-    ['!']   = '',
+    ['i'] = '',
+    ['ic'] = '',
+    ['ix'] = '',
+    ['s'] = '',
+    ['S'] = '',
+    ['v'] = '󰈈',
+    ['V'] = '󰉸',
+    [''] = '󰉸',
+    ['r'] = ' ',
+    ['r?'] = '',
+    ['R'] = '',
+    ['c'] = '',
+    ['t'] = '',
+    ['!'] = '',
   }
 end
 
@@ -99,7 +99,7 @@ function pd.mode()
     event = { 'ModeChanged', 'BufEnter', 'TermLeave' },
   }
 
-  result.attr = stl_attr("StatusLineMode")
+  result.attr = stl_attr('StatusLineMode')
   result.attr.bold = true
 
   return result
@@ -148,17 +148,17 @@ local function gitsigns_data(git_t)
   return function(args)
     local ok, dict = pcall(api.nvim_buf_get_var, args.buf, 'gitsigns_status_dict')
     if
-        not ok
-        or vim.tbl_isempty(dict)
-        or not dict[git_t]
-        or (type(dict[git_t]) == 'number' and dict[git_t] <= 0)
+      not ok
+      or vim.tbl_isempty(dict)
+      or not dict[git_t]
+      or (type(dict[git_t]) == 'number' and dict[git_t] <= 0)
     then
       return ''
     end
     if git_t == 'head' and dict[git_t] == '' then
       local obj = vim
-          .system({ 'git', 'config', '--get', 'init.defaultBranch' }, { text = true })
-          :wait()
+        .system({ 'git', 'config', '--get', 'init.defaultBranch' }, { text = true })
+        :wait()
       if #obj.stdout > 0 then
         dict[git_t] = vim.trim(obj.stdout)
       end
@@ -217,9 +217,9 @@ function pd.lsp()
           msg = client.name
         else
           msg = val.title
-              .. ' '
-              .. (val.message and val.message .. ' ' or '')
-              .. (val.percentage and val.percentage .. '%' or '')
+            .. ' '
+            .. (val.message and val.message .. ' ' or '')
+            .. (val.percentage and val.percentage .. '%' or '')
         end
       elseif args.event == 'BufEnter' then
         msg = client.name
@@ -245,9 +245,9 @@ function pd.recording()
     return stl
   end
   local result = {
-    stl   = stl_recording,
-    name  = 'recording',
-    attr  = {
+    stl = stl_recording,
+    name = 'recording',
+    attr = {
       fg = '#fabd2f',
     },
     event = { 'RecordingEnter', 'RecordingLeave' },
@@ -316,25 +316,50 @@ function pd.diagnostic(diag_t)
   }
 end
 
+function pd.filesize()
+  local size_unit = { 'b', 'k', 'm', 'g' }
+  local function get_size()
+    local size = vim.fn.getfsize(vim.fn.expand('%'))
+    local idx = 1
+    while size >= 1024 and idx < #size_unit do
+      size = size / 1024
+      idx = idx + 1
+    end
+    vim.api.nvim_buf_get_name(0)
+    return string.format('%.1f', size) .. size_unit[idx]
+  end
+  local result = {
+    stl = function()
+      return get_size()
+    end,
+    name = 'filesize',
+    default = get_size(),
+    event = { 'BufEnter', 'BufModifiedSet' },
+  }
+
+  result.attr = stl_attr('StatusLineEncoding')
+  result.attr.italic = true
+  return result
+end
+
 function pd.encoding()
   local map = {
     ['unix'] = ' ',
     ['linux'] = ' ',
     ['dos'] = ' ',
-
   }
   return {
     stl = map[vim.o.ff] .. vim.o.fileencoding,
     name = 'filencode',
     event = { 'BufEnter' },
-    attr = stl_attr("StatusLineEncoding"),
+    attr = stl_attr('StatusLineEncoding'),
   }
 end
 
 function pd.lnumcol()
   local result = {
-    stl   = '%-2.(%l:%c%)  %P',
-    name  = 'linecol',
+    stl = '%-2.(%l:%c%)  %P',
+    name = 'linecol',
     event = { 'BufEnter' },
   }
 
